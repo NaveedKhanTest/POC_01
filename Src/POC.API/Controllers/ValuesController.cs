@@ -43,14 +43,25 @@ namespace POC.API.Controllers
         //}
 
 
+            /// <summary>
+            /// Get all values 
+            /// </summary>
+            /// <returns>string array</returns>
         // GET api/values
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
+
             return new string[] { "value1", "value2" };
         }
 
-        // GET api/values/5
+
+        /// <summary>
+        /// Get by Id 
+        /// GET api/values/5
+        /// </summary>
+        /// <param name="id">id number</param>
+        /// <returns>returns string</returns>
         [HttpGet("{id}")]
         public ActionResult<string> Get(int id)
         {
