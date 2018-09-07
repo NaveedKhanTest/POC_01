@@ -4,11 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace POC.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [SwaggerTag("Create, read, update and delete Values -- using SwaggerTag")] // https://github.com/domaindrivendev/Swashbuckle.AspNetCore 
     public class ValuesController : ControllerBase
     {
 
@@ -43,10 +45,10 @@ namespace POC.API.Controllers
         //}
 
 
-            /// <summary>
-            /// Get all values 
-            /// </summary>
-            /// <returns>string array</returns>
+        /// <summary>
+        /// Get all values 
+        /// </summary>
+        /// <returns>string array</returns>
         // GET api/values
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
@@ -69,6 +71,14 @@ namespace POC.API.Controllers
         }
 
         // POST api/values
+
+        [SwaggerOperation(
+            Summary = "Creates a new value",
+            Description = "Requires admin privileges"
+            )]
+        [SwaggerResponse(201, "The value was created -- using SwaggerTag", typeof(string))]
+        [SwaggerResponse(400, "The value data is invalid -- using SwaggerTag")]
+
         [HttpPost]
         public void Post([FromBody] string value)
         {
