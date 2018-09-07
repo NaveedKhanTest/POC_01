@@ -1,0 +1,25 @@
+﻿@model List<AzureWebApp.Models.Fruit>
+
+@{
+    ViewData["Title"] = "About";
+}
+<h2>@ViewData["Title"]</h2>
+<h3>@ViewData["Message"]</h3>
+
+<p>Use this area to provide additional information.</p>
+
+
+<h3>List </h3>
+
+<table>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td style="text-decoration-style:solid" >   @item.FruitName  </td>
+            <td>  @item.Color  </td>
+            <td>  @item.EntryTime  </td>
+        </tr>
+
+
+    }
+</table>
