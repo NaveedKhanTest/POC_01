@@ -48,8 +48,8 @@ namespace POC.API
 
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-                c.IncludeXmlComments(@"C:\Developer\Repos\POCs\POC_SeleniumEtc\POC_01\Src\POC.API\bin\Debug\netcoreapp2.1\POC.API.xml");
-                //c.IncludeXmlComments(xmlPath);
+                //c.IncludeXmlComments(@"C:\Developer\Repos\POCs\POC_SeleniumEtc\POC_01\Src\POC.API\bin\Debug\netcoreapp2.1\POC.API.xml");
+                c.IncludeXmlComments(xmlPath);
 
                 c.EnableAnnotations();
 

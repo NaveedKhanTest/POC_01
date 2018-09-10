@@ -21,7 +21,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "POC.Data", "Core\POC.Data\P
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "POC.Service", "Core\POC.Service\POC.Service.csproj", "{27F44739-D23A-484D-9CEF-291ED00C7249}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureWebApp", "AzureWebApp\AzureWebApp.csproj", "{AAAD3E0F-5F74-49F7-B285-211759574A8C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzureWebApp", "AzureWebApp\AzureWebApp.csproj", "{AAAD3E0F-5F74-49F7-B285-211759574A8C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POC.API_Logging", "POC.API_Logging\POC.API_Logging.csproj", "{00178E05-E5D2-4F16-AB23-4C37C474B5E0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -61,6 +63,10 @@ Global
 		{AAAD3E0F-5F74-49F7-B285-211759574A8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AAAD3E0F-5F74-49F7-B285-211759574A8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AAAD3E0F-5F74-49F7-B285-211759574A8C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00178E05-E5D2-4F16-AB23-4C37C474B5E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00178E05-E5D2-4F16-AB23-4C37C474B5E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00178E05-E5D2-4F16-AB23-4C37C474B5E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00178E05-E5D2-4F16-AB23-4C37C474B5E0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
