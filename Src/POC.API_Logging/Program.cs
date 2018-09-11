@@ -19,6 +19,7 @@ namespace POC.API_Logging
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                .UseApplicationInsights()
                          .ConfigureLogging((hostingContext, logging) =>
                          {
                              logging.AddConfiguration(hostingContext.Configuration.GetSection("Logging"));
