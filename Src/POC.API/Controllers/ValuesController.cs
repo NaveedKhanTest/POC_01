@@ -65,9 +65,11 @@ namespace POC.API.Controllers
         /// <param name="id">id number</param>
         /// <returns>returns string</returns>
         [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
+        public ActionResult<provider> Get(int id)
         {
-            return "value " + id;
+            var model = new provider();
+            return model;
+
         }
 
         // POST api/values
@@ -96,4 +98,24 @@ namespace POC.API.Controllers
         {
         }
     }
+
+
+
+
+
+
+
+    public class provider
+    {
+        public string provideruid { get; set; }
+        public string providercode { get; set; }
+        public string provider_name { get; set; }
+        public string providertype { get; set; }
+        public string heptype { get; set; }
+        public string provider_effectivefrom { get; set; }
+    }
+
+
+
+
 }
