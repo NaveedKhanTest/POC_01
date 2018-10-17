@@ -50,9 +50,8 @@ namespace POC.API
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 //c.IncludeXmlComments(@"C:\Developer\Repos\POCs\POC_SeleniumEtc\POC_01\Src\POC.API\bin\Debug\netcoreapp2.1\POC.API.xml");
                 c.IncludeXmlComments(xmlPath);
-
                 c.EnableAnnotations();
-
+                c.OperationFilter<AddCommonHttpRequestHeadersInSwagger>();
 
             });
 
@@ -65,15 +64,19 @@ namespace POC.API
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            // Register middleware 
+            // app.UseMiddleware<ExceptionHandlingMiddleware>(); //for MVC ??
+            //app.UseMiddleware<CustomExceptionHandlingMiddleware>();
+
             app.UseStaticFiles();
 
+            //app.UseMiddleware(typeof(CommonHttpResponseHandlerMiddleware));
+            app.UseMiddleware<CommonHttpResponseHandlerMiddleware>();
+
             app.UseMvc();
-
             app.UseSwagger();
-
-
             //app.UseSwaggerUI();
-
 
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), 
             // specifying the Swagger JSON endpoint.
@@ -86,7 +89,6 @@ namespace POC.API
             });
 
             //app.UseSwaggerUI();
-
         }
     }
 }

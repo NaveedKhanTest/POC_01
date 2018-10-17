@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 
 namespace POC.API.Tests.IntegrationTests
@@ -29,6 +30,22 @@ namespace POC.API.Tests.IntegrationTests
 
             server = new TestServer(webHostBuilder);
             HttpClient = server.CreateClient();
+
+            //HttpClient.DefaultRequestHeaders.Add("Accept", "application/json");
+            //HttpClient.DefaultRequestHeaders.Add("some-id", "25");
+            //HttpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + "authorization_Header Key 111 xxx");
+            ////HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "Your Oauth token");
+
+            ////Note:  headers per request
+            ////If you don't want to set the header on the HttpClient instance by adding it to the DefaultRequestHeaders, 
+            ////you could set headers per request.
+            ////using (var requestMessage = new HttpRequestMessage(HttpMethod.Get, "https://your.site.com"))
+            ////{
+            ////    requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", your_token);
+            ////    httpClient.SendAsync(requestMessage);
+            ////}
+
+            SetCommonRequestHeaders();
         }
 
         [TestInitialize]
@@ -143,6 +160,14 @@ namespace POC.API.Tests.IntegrationTests
             }
 
             return apiResponseMessage;
+        }
+
+        private static void SetCommonRequestHeaders()
+        {
+            HttpClient.DefaultRequestHeaders.Add("request-timestamp", DateTime.UtcNow.ToString("s") + "Z");
+            HttpClient.DefaultRequestHeaders.Add("api-key", "xxxx111222Key");
+            HttpClient.DefaultRequestHeaders.Add("Accept", "application/json");
+            // HttpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + "authorization key aaa");
         }
     }
 }
