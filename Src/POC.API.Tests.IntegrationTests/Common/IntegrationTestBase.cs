@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Morcatko.AspNetCore.JsonMergePatch;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace POC.API.Tests.IntegrationTests
 {
@@ -15,6 +17,7 @@ namespace POC.API.Tests.IntegrationTests
     public abstract class IntegrationTestBase
     {
         private static TestServer server;
+        public TestContext TestContext { get; set; }
 
         public static HttpClient HttpClient { get; set; }
 
@@ -78,6 +81,13 @@ namespace POC.API.Tests.IntegrationTests
             server.Dispose();
             HttpClient = null;
             server = null;
+        }
+
+        public async Task<HttpResponseMessage> Patch(string path, string json)
+        {
+            var content = new StringContent(json, System.Text.Encoding.UTF8, JsonMergePatchDocument.ContentType);
+            var httpResponse = await HttpClient.PatchAsync(path, content).ConfigureAwait(false);
+            return await httpResponse.CheckServerError(this.TestContext);
         }
 
         public ApiResponseMessage<T> GetById<T>(string url)

@@ -19,6 +19,47 @@ namespace POC.Data
             DbSet = context.Set<T>();
         }
 
+        //public async Task<Students> Create(Students students)
+        //{
+        //    var result = await this.DbContext.Students.AddAsync(students);
+        //    DbContext.SaveChanges();
+
+        //    return result.Entity;
+        //}
+
+        //SaveAsync
+        public async Task<T> PostAsync(T entity)
+        {
+            var result = await Context.Set<T>().AddAsync(entity);
+            Context.SaveChanges();
+            return result.Entity;
+
+
+            //var result = Context.Set<T>().AddAsync(entity);
+            //Context.SaveChanges();
+            ////return result.Entity;
+            //Context.Set<T>().Add(entity);
+            //Save();
+        }
+
+        public T Update(T entity)
+        {
+            try
+            {
+
+            var result = Context.Set<T>().Update(entity);
+            Context.SaveChanges();
+            return result.Entity;
+
+            }
+            catch (Exception ex)
+            {
+                var msg = ex.Message;
+
+                throw;
+            }
+        }
+
         public void Add(T entity)
         {
             Context.Set<T>().Add(entity);
@@ -32,6 +73,12 @@ namespace POC.Data
         }
 
         public IQueryable<T> GetAll()
+        {
+            return DbSet;
+        }
+
+        //async Task<IQueryable<URL>> GetAllUrlsAsync()
+        public async Task<IQueryable<T>> GetAllAsync()
         {
             return DbSet;
         }
@@ -50,14 +97,16 @@ namespace POC.Data
 
         public async Task<IEnumerable<T>> FindByConditionAync(Expression<Func<T, bool>> expression)
         {
-            return await this.Context.Set<T>().Where(expression).ToListAsync();
+            return await this.Context.Set<T>().Where(expression).AsNoTracking().ToListAsync();
         }
 
 
-        public void Update(T entity)
-        {
-            Save();
-        }
+        //public void Update(T entity)
+        //{
+        //    Save();
+        //}
+
+
 
         private void Save()
         {
@@ -68,5 +117,9 @@ namespace POC.Data
             await this.Context.SaveChangesAsync();
         }
 
+        public object FindByConditionAync(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -28,7 +28,7 @@ namespace POC.Web.Controllers
         {
             var students = _studentService.GetAll();
 
-            var model = students.ToList();
+            var model = students;
 
             return View(model);
         }

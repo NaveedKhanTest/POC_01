@@ -12,6 +12,8 @@ namespace POC.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [ApiExplorerSettings(IgnoreApi = true)]
+
     [SwaggerTag("Create, read, update and delete Values -- using SwaggerTag")] // https://github.com/domaindrivendev/Swashbuckle.AspNetCore 
     public class ValuesController : ControllerBase
     {

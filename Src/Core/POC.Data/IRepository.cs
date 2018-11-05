@@ -11,18 +11,24 @@ namespace POC.Data
     T Get<TKey>(TKey id);
     IQueryable<T> GetAll();
 
-    IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression);
+      Task<T> PostAsync(T entity);
+      T Update(T entity);
+
+
+        IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression);
 
 
         void Add(T entity);
-    void Update(T entity);
 
         #region Async 
+
+        Task<IQueryable<T>> GetAllAsync();
 
         Task<IEnumerable<T>> FindAllAsync();
         Task<IEnumerable<T>> FindByConditionAync(Expression<Func<T, bool>> expression);
 
         Task SaveAsync();
+        object FindByConditionAync(int id);
 
         #endregion
 
