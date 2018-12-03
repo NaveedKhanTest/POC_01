@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Net.Http;
+using System.Net.Mime;
 using System.Threading.Tasks;
-using System.Transactions;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
@@ -16,23 +14,23 @@ namespace POC.API.Tests.IntegrationTestsV2
     [TestClass]
     public class StudentsTests : BaseTest 
     {
-        private string baseUrl = "api/Students";
+        private string baseUrl = "api/students";
 
-        private string getStudentIdFormat = "http://localhost/campuses/{0}";
+        private string getStudentIdFormat = "http://localhost/students/{0}";
 
         [TestMethod]
         public async Task GetStudentsById_IsOk()
         {
             var uid = 1;
             var url = $"{baseUrl}/{uid}";
-            StudentModel expected = GetStudentModel(uid);
+            StudentModel expected = LoadStudentModel(uid);
 
             var actual = await this.Get($"{url}")
                       .Expect(200)
                       .As<StudentModel>();
 
             Assert.IsNotNull(actual);
-            Assert.AreEqual(actual.FirstMidName, expected.FirstMidName);
+            //Assert.AreEqual(actual.FirstMidName, expected.FirstMidName);
 
             Assert.IsFalse(string.IsNullOrWhiteSpace(actual.Link.Href), "Expected one link");
         }
@@ -53,7 +51,7 @@ namespace POC.API.Tests.IntegrationTestsV2
         }
 
 
-        private StudentModel GetStudentModel(int uid)
+        private StudentModel LoadStudentModel(int uid)
         {
             var expected = new StudentModel
             {
@@ -74,7 +72,7 @@ namespace POC.API.Tests.IntegrationTestsV2
         [TestMethod]
         public async Task PostStudent_IsOK()
         {
-            var newStudent = GetStudentModel(0);
+            var newStudent = LoadStudentModel(0);
 
             var url = $"{baseUrl}";
 
@@ -82,11 +80,21 @@ namespace POC.API.Tests.IntegrationTestsV2
                 r => r.And(h => h.Headers.Remove(ApiParametersConstant.ApiToken))
                 .AddHeader(ApiParametersConstant.ApiToken, "new token 111"));
 
-            var id = await this.Post($"{url}", newStudent, onBeforeSend: headersSetting)
-                      .Expect(200);
-                      //.As<SomeModel>();
 
-            Assert.IsNotNull(newStudent);
+            var response = await this.Post($"{url}", newStudent, onBeforeSend: headersSetting)
+                      .Expect(200);
+            //.As<SomeModel>();
+            //.As<int>(); to use for int etc remove where T : class
+
+            if (response.Content.Headers.ContentType.MediaType == MediaTypeNames.Application.Json)
+            {
+                var json = await response.Content.ReadAsStringAsync();
+                var valueId = JsonConvert.DeserializeObject<int>(json);
+                Assert.IsNotNull(valueId > 0);
+
+            }
+
+            Assert.IsNotNull(response);
         }
 
 

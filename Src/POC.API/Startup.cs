@@ -1,6 +1,4 @@
-﻿
-
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -15,7 +13,7 @@ using POC.Service;
 using Swashbuckle.AspNetCore.Swagger;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Http;
-
+using POC.API.Handlers;
 
 
 
@@ -40,7 +38,18 @@ namespace POC.API
             // https://dotnetcore.gaprogman.com/2017/12/07/giving-dwcheckapi-that-swagger/ 
             // https://github.com/domaindrivendev/Swashbuckle.AspNetCore
 
-            services.AddMvc().AddJsonMergePatch();
+            // serializer settings
+
+            services.AddMvc()
+                //.AddMvcOptions(opt => opt.OutputFormatters )
+                .AddJsonMergePatch()
+                            .AddJsonOptions(options =>
+                            {
+                                options.SerializerSettings.ContractResolver = new EmptyCollectionContractResolver();
+                                options.SerializerSettings.Formatting = Formatting.Indented;
+                                options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+                                options.SerializerSettings.Converters.Add(new EmptyStringToNullJsonConverter());
+                            });
 
             //services.AddMvc()
             //        .AddJsonMergePatch()
@@ -49,6 +58,8 @@ namespace POC.API
             //            //don't use using System.Xml;
             //            options.SerializerSettings.Formatting = Formatting.Indented;
             //        });
+
+            services.AddLazyCache();
 
             #region DI configurations
 

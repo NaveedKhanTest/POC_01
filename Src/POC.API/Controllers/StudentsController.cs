@@ -1,10 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Morcatko.AspNetCore.JsonMergePatch;
+using Newtonsoft.Json;
+using POC.API.Filters;
 using POC.Service;
 using POC.Service.Models;
 using Swashbuckle.AspNetCore.Annotations;
@@ -15,6 +20,7 @@ namespace POC.API.Controllers
     //[ApiController]
     //[Route("students")]
     //[Produces("application/json")] //only json
+    [TypeFilter(typeof(DenyAccessForUserTypesFilter), Arguments = new object[] { new[] { "Guest" } })]
     public class StudentsController : ControllerBase
     {
         protected IStudentService StudentService;
@@ -43,7 +49,7 @@ namespace POC.API.Controllers
 
             foreach (var item in StudentModel)
             {
-                var url = Url.Link(nameof(GetStudentById), new { uid = item.ID });
+                var url = Url.Link(nameof(GetStudentById), new { id = item.ID });
                 item.Link = new LinkModel(url, LinkModel.SELF);
                 //{
                 //    LinkModel
@@ -68,7 +74,7 @@ namespace POC.API.Controllers
                 var model =  await StudentService.GetAsync(id);
                 if (model != null)
                 {
-                    var url = Url.Link(nameof(GetStudentById), new { uid = model.ID });
+                    var url = Url.Link(nameof(GetStudentById), new { id = model.ID });
                     model.Link = new LinkModel(url, LinkModel.SELF);
                     return this.Ok(model);
                 }
@@ -173,6 +179,56 @@ namespace POC.API.Controllers
 
             return this.BadRequest(new { Values = "some error ... model with messages .." });
         }
+
+        /*
+        public async Task<IActionResult> PostBulk([FromBody] IList<PostData<StudentModel>> studentList)
+        {
+            var resultList = new List<ResultData<StudentModel>>();
+
+            foreach (var item in studentList)
+            {
+                var resultData = new ResultData<StudentModel>()
+                {
+                    StatusCode = (int)HttpStatusCode.InternalServerError,
+                };
+
+                try
+                {
+                    var resultSinglePost = (ObjectResult)await PostCoursesOfStudy(item.Data);
+                    resultData.StatusCode = (int)resultSinglePost.StatusCode;
+
+                    switch (resultData.StatusCode)
+                    {
+                        case (int)HttpStatusCode.OK:
+                            var data = (StudentModel)resultSinglePost.Value;
+                            resultData.Data = data;
+                            break;
+                        case (int)HttpStatusCode.BadRequest:
+                            var messagesValue = (SomeMsgModel) resultSinglePost.Value;
+                            resultData.Messages = messagesValue.Messages;
+                            break;
+                        default:
+                            //resultData.Messages.Add(MessagesHelper.LoadMessageForBulkPostUnexpectedError());
+                            //.LogException($"In '{this.GetType().Name}', an unexpected error occurred during multiple/bulk post request. input data: {JsonConvert.SerializeObject(item.Data)}");
+                            break;
+                    }
+                }
+                catch (DbUpdateException ex)
+                {
+                    var sqlException = ex.GetBaseException() as SqlException;
+                    throw;
+                }
+                catch (Exception ex)
+                {
+                    
+                }
+
+                resultList.Add(resultData);
+            }
+
+            return StatusCode((int)HttpStatusCode.MultiStatus, resultList);
+        }
+        */
 
 
 

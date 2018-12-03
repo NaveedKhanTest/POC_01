@@ -1,0 +1,1081 @@
+{
+	"info": {
+		"_postman_id": "a39e34ba-c8e0-4a48-a4a1-86b2202668c1",
+		"name": "POC - COS",
+		"description": "some desc 123",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "CRUD_COS_happy_path",
+			"description": "",
+			"item": [
+				{
+					"name": "Bulk-COS",
+					"description": "",
+					"item": [
+						{
+							"name": "Post COS Bulk",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "08d89fbc-d17a-4d55-9224-258ad27a237b",
+										"type": "text/javascript",
+										"exec": [
+											"// tests[\"Status code is 200\"] = responseCode.code === 200;",
+											"",
+											"var responseJSON = JSON.parse(responseBody); ",
+											"",
+											" let tempList = _.filter(responseJSON, {  \"status_code\": 200 });",
+											"    //console.log( tempList);",
+											"    ",
+											"   var i;",
+											"for (i = 1; i <= responseJSON.length; i++) { ",
+											"    var item = responseJSON[i-1];",
+											"    ",
+											"    //console.log(item);",
+											"        let code = item.status_code;",
+											"    if (code == 200)",
+											"    {",
+											"        tests[\"At index \" + i +\" - response e394_course_of_study_name matches => \" + item.data.e394_course_of_study_name] = item.data.e394_course_of_study_name  === \"Course00\"+i;",
+											"        tests[\"At index \" + i +\" - response e310_course_of_study_type matches => \" + item.data.e310_course_of_study_type] = item.data.e310_course_of_study_type  === \"0\"+i;",
+											"        ",
+											"        tests[\"At index \" + i +\" - response e455_combined_course_of_study_indicator matches => \" + item.data.e455_combined_course_of_study_indicator] = item.data.e455_combined_course_of_study_indicator  === false;",
+											"        ",
+											"        tests[\"At index \" + i +\" - response e350_course_of_study_load matches => \" + item.data.e350_course_of_study_load] = item.data.e350_course_of_study_load  === 0.1;",
+											"        ",
+											"        //set collection variables uid to reuse for deletion",
+											"        pm.variables.set(\"uidBulk\" + i, item.data.uid);",
+											"        ",
+											"    }",
+											"    else",
+											"    {",
+											"      tests[\"At index \" + i +\" - Child request failed. correlation_id: \" + item.correlation_id + \" response code: \" + code] = false;",
+											"    }",
+											"    ",
+											"}",
+											"    ",
+											"/*   ",
+											"//let i = 0;",
+											"    _.forEach(responseJSON, function(item) { ",
+											"    i++;",
+											"    //let prop = ++prop || 1;",
+											"    //console.log(prop);",
+											"        ",
+											"",
+											"    let code = item.status_code;",
+											"    if (code == 200)",
+											"    {",
+											"        tests[\"sent and response e394_course_of_study_name matches => \" + item.data.e394_course_of_study_name] = item.data.e394_course_of_study_name  === \"Course00\"+i;",
+											"        tests[\"sent and response e310_course_of_study_type matches => \" + item.data.e310_course_of_study_type] = item.data.e310_course_of_study_type  === \"0\"+i;",
+											"        ",
+											"         //tests['Child request is successful. correlation_id: ' + item.correlation_id +' response code: ' + code] = true;",
+											"    }",
+											"    else",
+											"    {",
+											"      tests['Child request failed. correlation_id: ' + item.correlation_id + ' response code: ' + code] = false;",
+											"    }",
+											"",
+											"    ",
+											"    });",
+											"*/",
+											"",
+											"",
+											"        ",
+											"        ",
+											" ",
+											"",
+											"",
+											"",
+											"",
+											"",
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "organisation-id",
+										"value": "{{organisation-id}}"
+									},
+									{
+										"key": "provider-type",
+										"value": "{{provider-type_HEP}}"
+									},
+									{
+										"key": "message-id",
+										"value": "{{$guid}}"
+									},
+									{
+										"key": "user-name",
+										"value": "{{user-name}}"
+									},
+									{
+										"key": "dhs-String-timestamp",
+										"value": "{{dhs-String-timestamp}}"
+									},
+									{
+										"key": "provider-String-timestamp",
+										"value": "{{provider-String-timestamp}}"
+									},
+									{
+										"key": "organisation-name",
+										"value": "{{organisation-name}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Ocp-Apim-Subscription-Key",
+										"value": "{{Ocp-Apim-Subscription-Key}}"
+									},
+									{
+										"key": "some",
+										"value": "ABC+{{$randomInt}}-{{$randomInt}}-{{$randomInt}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[\r\n  {\r\n    \"correlation_id\": 1,\r\n    \"data\": {\r\n      \"e533_course_of_study_code\": \"A{{$randomInt}}{{$randomInt}}{{$randomInt}}\", \r\n      \"e394_course_of_study_name\": \"Course001\",\r\n      \"e310_course_of_study_type\": \"01\",\r\n      \"e350_course_of_study_load\": 0.1,\r\n      \"e455_combined_course_of_study_indicator\": 0\r\n    }},\r\n    {\r\n    \r\n    \"correlation_id\": 2,\r\n    \"data\": {\r\n      \"e533_course_of_study_code\": \"{{$randomInt}}{{$randomInt}}{{$randomInt}}\",\r\n      \"e394_course_of_study_name\": \"Course002\",\r\n      \"e310_course_of_study_type\": \"02\",\r\n      \"e350_course_of_study_load\": 0.1,\r\n      \"e455_combined_course_of_study_indicator\": 0\r\n    }},\r\n    {\r\n    \"correlation_id\": 3,\r\n    \"data\": {\r\n      \"e533_course_of_study_code\": \"{{$randomInt}}{{$randomInt}}{{$randomInt}}\",\r\n      \"e394_course_of_study_name\": \"Course003\",\r\n      \"e310_course_of_study_type\": \"03\",\r\n      \"e350_course_of_study_load\": 0.1,\r\n      \"e455_combined_course_of_study_indicator\": 0\r\n    }},\r\n{\r\n    \"correlation_id\": 4,\r\n    \"data\": {\r\n      \"e533_course_of_study_code\": \"{{$randomInt}}{{$randomInt}}{{$randomInt}}\",\r\n      \"e394_course_of_study_name\": \"Course004\",\r\n      \"e310_course_of_study_type\": \"04\",\r\n      \"e350_course_of_study_load\": 0.1,\r\n      \"e455_combined_course_of_study_indicator\": 0\r\n    }\r\n  }\r\n]\r\n"
+								},
+								"url": {
+									"raw": "{{hostUrl}}{{basePathCurriculum}}courses-of-study/bulk",
+									"host": [
+										"{{hostUrl}}{{basePathCurriculum}}courses-of-study"
+									],
+									"path": [
+										"bulk"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Patch COS",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "bfb8b05f-fb1b-42d3-8ce1-fd8a3eb2594c",
+										"type": "text/javascript",
+										"exec": [
+											"",
+											"var responseJSON = JSON.parse(responseBody);",
+											"",
+											"tests[\"sent and response e394_course_of_study_name matches\"] = responseJSON.e394_course_of_study_name  === \"Patch bulked test Bachelor of Arts\";",
+											"",
+											"",
+											" "
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "organisation-id",
+										"value": "3006"
+									},
+									{
+										"key": "provider-type",
+										"value": "{{provider-type_HEP}}"
+									},
+									{
+										"key": "message-id",
+										"value": "{{$guid}}"
+									},
+									{
+										"key": "user-name",
+										"value": "{{user-name}}"
+									},
+									{
+										"key": "dhs-String-timestamp",
+										"value": "{{dhs-String-timestamp}}"
+									},
+									{
+										"key": "provider-String-timestamp",
+										"value": "{{provider-String-timestamp}}"
+									},
+									{
+										"key": "organisation-name",
+										"value": "{{organisation-name}}"
+									},
+									{
+										"key": "Ocp-Apim-Subscription-Key",
+										"value": "{{Ocp-Apim-Subscription-Key}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "{{Content-TypePatch}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "\r\n{\r\n\"e394_course_of_study_name\": \"Patch bulked test Bachelor of Arts\"\r\n}"
+								},
+								"url": {
+									"raw": "{{hostUrl}}{{basePathCurriculum}}courses-of-study/{{uidBulk1}}",
+									"host": [
+										"{{hostUrl}}{{basePathCurriculum}}courses-of-study"
+									],
+									"path": [
+										"{{uidBulk1}}"
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "48d28216-b3de-440f-baa9-9ea2344995f7",
+									"name": "Patch COS-Example",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "organisation-id",
+												"value": "3006"
+											},
+											{
+												"key": "provider-type",
+												"value": "{{provider-type_HEP}}"
+											},
+											{
+												"key": "message-id",
+												"value": "{{$guid}}"
+											},
+											{
+												"key": "user-name",
+												"value": "{{user-name}}"
+											},
+											{
+												"key": "dhs-String-timestamp",
+												"value": "{{dhs-String-timestamp}}"
+											},
+											{
+												"key": "provider-String-timestamp",
+												"value": "{{provider-String-timestamp}}"
+											},
+											{
+												"key": "organisation-name",
+												"value": "{{organisation-name}}"
+											},
+											{
+												"key": "Ocp-Apim-Subscription-Key",
+												"value": "{{Ocp-Apim-Subscription-Key}}"
+											},
+											{
+												"key": "Content-Type",
+												"value": "{{Content-TypePatch}}"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "\r\n{\r\n\"e394_course_of_study_name\": \"Test 01-Bachelor of Arts\"\r\n}"
+										},
+										"url": {
+											"raw": "{{hostUrl}}{{basePathCurriculum}}courses-of-study/2",
+											"host": [
+												"{{hostUrl}}{{basePathCurriculum}}courses-of-study"
+											],
+											"path": [
+												"2"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8",
+											"name": "Content-Type",
+											"description": "The mime type of this content"
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 26 Nov 2018 04:41:10 GMT",
+											"name": "Date",
+											"description": "The date and time that the message was sent"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked",
+											"name": "Transfer-Encoding",
+											"description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+										}
+									],
+									"cookie": [],
+									"body": "{\r\n  \"uid\": 2,\r\n  \"e533_course_of_study_code\": \"3006_6\",\r\n  \"e394_course_of_study_name\": \"Test 01-Bachelor of Arts\",\r\n  \"e310_course_of_study_type\": \"10\",\r\n  \"e350_course_of_study_load\": 3.0,\r\n  \"e455_combined_course_of_study_indicator\": false,\r\n  \"Links\": [\r\n    {\r\n      \"Href\": \"http://172.22.10.21:8581/courses-of-study/2\",\r\n      \"Rel\": \"self\"\r\n    }\r\n  ]\r\n}"
+								}
+							]
+						},
+						{
+							"name": "getCoursesOfStudyById uidBulk1",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "b67d32da-7b5f-4a9c-a7ff-9a7e0986c186",
+										"type": "text/javascript",
+										"exec": [
+											"",
+											"var responseJSON = JSON.parse(responseBody);",
+											"",
+											"//validate name",
+											"tests[\"sent and response e394_course_of_study_name matches\"] = responseJSON.e394_course_of_study_name  === \"Patch bulked test Bachelor of Arts\";",
+											"        ",
+											"",
+											"",
+											"",
+											"",
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "organisation-id",
+										"value": "{{organisation-id}}"
+									},
+									{
+										"key": "provider-type",
+										"value": "{{provider-type_HEP}}"
+									},
+									{
+										"key": "message-id",
+										"value": "{{$guid}}"
+									},
+									{
+										"key": "user-name",
+										"value": "{{user-name}}"
+									},
+									{
+										"key": "dhs-String-timestamp",
+										"value": "{{dhs-String-timestamp}}"
+									},
+									{
+										"key": "provider-String-timestamp",
+										"value": "{{provider-String-timestamp}}"
+									},
+									{
+										"key": "organisation-name",
+										"value": "{{organisation-name}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"disabled": true
+									},
+									{
+										"key": "Ocp-Apim-Subscription-Key",
+										"value": "{{Ocp-Apim-Subscription-Key}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"e533_course_of_study_code\": \"3006_6\",\r\n  \"e394_course_of_study_name\": \"Test Bachelor of Arts\",\r\n  \"e310_course_of_study_type\": \"10\",\r\n  \"e350_course_of_study_load\": 3.0,\r\n    \"e455_combined_course_of_study_indicator\": true\r\n}"
+								},
+								"url": {
+									"raw": "{{hostUrl}}{{basePathCurriculum}}courses-of-study/{{uidBulk1}}",
+									"host": [
+										"{{hostUrl}}{{basePathCurriculum}}courses-of-study"
+									],
+									"path": [
+										"{{uidBulk1}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DeleteCoursesOfStudyById - uidBulk1",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "2c6b2050-75d0-4da3-9d38-df1f09377790",
+										"type": "text/javascript",
+										"exec": [
+											"",
+											"tests[\"Status code is 204\"] = responseCode.code === 204;",
+											"",
+											"",
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "organisation-id",
+										"value": "{{organisation-id}}"
+									},
+									{
+										"key": "provider-type",
+										"value": "{{provider-type_HEP}}"
+									},
+									{
+										"key": "message-id",
+										"value": "{{$guid}}"
+									},
+									{
+										"key": "user-name",
+										"value": "{{user-name}}"
+									},
+									{
+										"key": "dhs-String-timestamp",
+										"value": "{{dhs-String-timestamp}}"
+									},
+									{
+										"key": "provider-String-timestamp",
+										"value": "{{provider-String-timestamp}}"
+									},
+									{
+										"key": "organisation-name",
+										"value": "{{organisation-name}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"disabled": true
+									},
+									{
+										"key": "Ocp-Apim-Subscription-Key",
+										"value": "{{Ocp-Apim-Subscription-Key}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"e533_course_of_study_code\": \"3006_6\",\r\n  \"e394_course_of_study_name\": \"Test Bachelor of Arts\",\r\n  \"e310_course_of_study_type\": \"10\",\r\n  \"e350_course_of_study_load\": 3.0,\r\n    \"e455_combined_course_of_study_indicator\": true\r\n}"
+								},
+								"url": {
+									"raw": "{{hostUrl}}{{basePathCurriculum}}courses-of-study/{{uidBulk1}}",
+									"host": [
+										"{{hostUrl}}{{basePathCurriculum}}courses-of-study"
+									],
+									"path": [
+										"{{uidBulk1}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DeleteCoursesOfStudyById - uidBulk2",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "2c6b2050-75d0-4da3-9d38-df1f09377790",
+										"type": "text/javascript",
+										"exec": [
+											"",
+											"tests[\"Status code is 204\"] = responseCode.code === 204;",
+											"",
+											"",
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "organisation-id",
+										"value": "{{organisation-id}}"
+									},
+									{
+										"key": "provider-type",
+										"value": "{{provider-type_HEP}}"
+									},
+									{
+										"key": "message-id",
+										"value": "{{$guid}}"
+									},
+									{
+										"key": "user-name",
+										"value": "{{user-name}}"
+									},
+									{
+										"key": "dhs-String-timestamp",
+										"value": "{{dhs-String-timestamp}}"
+									},
+									{
+										"key": "provider-String-timestamp",
+										"value": "{{provider-String-timestamp}}"
+									},
+									{
+										"key": "organisation-name",
+										"value": "{{organisation-name}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"disabled": true
+									},
+									{
+										"key": "Ocp-Apim-Subscription-Key",
+										"value": "{{Ocp-Apim-Subscription-Key}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"e533_course_of_study_code\": \"3006_6\",\r\n  \"e394_course_of_study_name\": \"Test Bachelor of Arts\",\r\n  \"e310_course_of_study_type\": \"10\",\r\n  \"e350_course_of_study_load\": 3.0,\r\n    \"e455_combined_course_of_study_indicator\": true\r\n}"
+								},
+								"url": {
+									"raw": "{{hostUrl}}{{basePathCurriculum}}courses-of-study/{{uidBulk2}}",
+									"host": [
+										"{{hostUrl}}{{basePathCurriculum}}courses-of-study"
+									],
+									"path": [
+										"{{uidBulk2}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DeleteCoursesOfStudyById - uidBulk3",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "2c6b2050-75d0-4da3-9d38-df1f09377790",
+										"type": "text/javascript",
+										"exec": [
+											"",
+											"tests[\"Status code is 204\"] = responseCode.code === 204;",
+											"",
+											"",
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "organisation-id",
+										"value": "{{organisation-id}}"
+									},
+									{
+										"key": "provider-type",
+										"value": "{{provider-type_HEP}}"
+									},
+									{
+										"key": "message-id",
+										"value": "{{$guid}}"
+									},
+									{
+										"key": "user-name",
+										"value": "{{user-name}}"
+									},
+									{
+										"key": "dhs-String-timestamp",
+										"value": "{{dhs-String-timestamp}}"
+									},
+									{
+										"key": "provider-String-timestamp",
+										"value": "{{provider-String-timestamp}}"
+									},
+									{
+										"key": "organisation-name",
+										"value": "{{organisation-name}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"disabled": true
+									},
+									{
+										"key": "Ocp-Apim-Subscription-Key",
+										"value": "{{Ocp-Apim-Subscription-Key}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"e533_course_of_study_code\": \"3006_6\",\r\n  \"e394_course_of_study_name\": \"Test Bachelor of Arts\",\r\n  \"e310_course_of_study_type\": \"10\",\r\n  \"e350_course_of_study_load\": 3.0,\r\n    \"e455_combined_course_of_study_indicator\": true\r\n}"
+								},
+								"url": {
+									"raw": "{{hostUrl}}{{basePathCurriculum}}courses-of-study/{{uidBulk3}}",
+									"host": [
+										"{{hostUrl}}{{basePathCurriculum}}courses-of-study"
+									],
+									"path": [
+										"{{uidBulk3}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Post COS",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6a76c804-39c8-42fd-aa0a-2e9ce096fa3e",
+								"type": "text/javascript",
+								"exec": [
+									"",
+									"var responseData = JSON.parse(responseBody); ",
+									"    ",
+									"    //set collection variables uid to reuse for other requests e.g. delete",
+									"    pm.variables.set(\"uid\", responseData.uid);",
+									"    ",
+									"    tests[\"response e394_course_of_study_name matches => \" + responseData.e394_course_of_study_name] = responseData.e394_course_of_study_name  === \"Test Bachelor of Arts\";",
+									"    tests[\"response e310_course_of_study_type matches => \" + responseData.e310_course_of_study_type] = responseData.e310_course_of_study_type  === \"10\";",
+									"    ",
+									"    tests[\"response e455_combined_course_of_study_indicator matches => \" + responseData.e455_combined_course_of_study_indicator] = responseData.e455_combined_course_of_study_indicator  === true;",
+									"    ",
+									"    tests[\"response e350_course_of_study_load matches => \" + responseData.e350_course_of_study_load] = responseData.e350_course_of_study_load  === 3.0;",
+									"    ",
+									"    //Links",
+									"    tests[\"responseData.Links is an array\"] = _.isArray(responseData.Links) === true;",
+									"    tests[\"responseData.Links contains uid => \" +  responseData.uid] = _.contains(responseData.Links[0].Href, responseData.uid)  === true;",
+									"",
+									"",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "organisation-id",
+								"value": "{{organisation-id}}"
+							},
+							{
+								"key": "provider-type",
+								"value": "{{provider-type_HEP}}"
+							},
+							{
+								"key": "message-id",
+								"value": "{{$guid}}"
+							},
+							{
+								"key": "user-name",
+								"value": "{{user-name}}"
+							},
+							{
+								"key": "dhs-String-timestamp",
+								"value": "{{dhs-String-timestamp}}"
+							},
+							{
+								"key": "provider-String-timestamp",
+								"value": "{{provider-String-timestamp}}"
+							},
+							{
+								"key": "organisation-name",
+								"value": "{{organisation-name}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Ocp-Apim-Subscription-Key",
+								"value": "{{Ocp-Apim-Subscription-Key}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"e533_course_of_study_code\": \"{{$randomInt}}{{$randomInt}}{{$randomInt}}\",\r\n  \"e394_course_of_study_name\": \"Test Bachelor of Arts\",\r\n  \"e310_course_of_study_type\": \"10\",\r\n  \"e350_course_of_study_load\": 3.0,\r\n  \"e455_combined_course_of_study_indicator\": true\r\n}"
+						},
+						"url": {
+							"raw": "{{hostUrl}}{{basePathCurriculum}}courses-of-study/",
+							"host": [
+								"{{hostUrl}}{{basePathCurriculum}}courses-of-study"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getCoursesOfStudyById",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "84f1cab9-24c9-4eee-993c-d0ce0ebead38",
+								"type": "text/javascript",
+								"exec": [
+									"",
+									"var responseJSON = JSON.parse(responseBody);",
+									"",
+									"//validate name",
+									"tests[\"sent and response e394_course_of_study_name matches\"] = responseJSON.e394_course_of_study_name  === \"Test Bachelor of Arts\";",
+									"        ",
+									"",
+									"",
+									"",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "organisation-id",
+								"value": "{{organisation-id}}"
+							},
+							{
+								"key": "provider-type",
+								"value": "{{provider-type_HEP}}"
+							},
+							{
+								"key": "message-id",
+								"value": "{{$guid}}"
+							},
+							{
+								"key": "user-name",
+								"value": "{{user-name}}"
+							},
+							{
+								"key": "dhs-String-timestamp",
+								"value": "{{dhs-String-timestamp}}"
+							},
+							{
+								"key": "provider-String-timestamp",
+								"value": "{{provider-String-timestamp}}"
+							},
+							{
+								"key": "organisation-name",
+								"value": "{{organisation-name}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"disabled": true
+							},
+							{
+								"key": "Ocp-Apim-Subscription-Key",
+								"value": "{{Ocp-Apim-Subscription-Key}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"e533_course_of_study_code\": \"3006_6\",\r\n  \"e394_course_of_study_name\": \"Test Bachelor of Arts\",\r\n  \"e310_course_of_study_type\": \"10\",\r\n  \"e350_course_of_study_load\": 3.0,\r\n    \"e455_combined_course_of_study_indicator\": true\r\n}"
+						},
+						"url": {
+							"raw": "{{hostUrl}}{{basePathCurriculum}}courses-of-study/{{uid}}",
+							"host": [
+								"{{hostUrl}}{{basePathCurriculum}}courses-of-study"
+							],
+							"path": [
+								"{{uid}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteCoursesOfStudyById",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2c6b2050-75d0-4da3-9d38-df1f09377790",
+								"type": "text/javascript",
+								"exec": [
+									"",
+									"tests[\"Status code is 204\"] = responseCode.code === 204;",
+									"",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "organisation-id",
+								"value": "{{organisation-id}}"
+							},
+							{
+								"key": "provider-type",
+								"value": "{{provider-type_HEP}}"
+							},
+							{
+								"key": "message-id",
+								"value": "{{$guid}}"
+							},
+							{
+								"key": "user-name",
+								"value": "{{user-name}}"
+							},
+							{
+								"key": "dhs-String-timestamp",
+								"value": "{{dhs-String-timestamp}}"
+							},
+							{
+								"key": "provider-String-timestamp",
+								"value": "{{provider-String-timestamp}}"
+							},
+							{
+								"key": "organisation-name",
+								"value": "{{organisation-name}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"disabled": true
+							},
+							{
+								"key": "Ocp-Apim-Subscription-Key",
+								"value": "{{Ocp-Apim-Subscription-Key}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"e533_course_of_study_code\": \"3006_6\",\r\n  \"e394_course_of_study_name\": \"Test Bachelor of Arts\",\r\n  \"e310_course_of_study_type\": \"10\",\r\n  \"e350_course_of_study_load\": 3.0,\r\n    \"e455_combined_course_of_study_indicator\": true\r\n}"
+						},
+						"url": {
+							"raw": "{{hostUrl}}{{basePathCurriculum}}courses-of-study/{{uid}}",
+							"host": [
+								"{{hostUrl}}{{basePathCurriculum}}courses-of-study"
+							],
+							"path": [
+								"{{uid}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "772def0d-eb50-4647-b786-4f93df217a22",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "ab273f92-42f5-4c52-9b1c-a900d04338f1",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Request is successful\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200,201,202,204, 207]);",
+							"});",
+							"",
+							"",
+							"var responseJSON;",
+							"",
+							"try { ",
+							"    if (pm.response.code != 204)",
+							"    {",
+							"        responseJSON = JSON.parse(responseBody); ",
+							"        //tests['response is valid JSON!!'] = true;",
+							"    }",
+							"}",
+							"catch (e) { ",
+							"    console.log(e);",
+							"    tests['response is valid JSON'] = false;",
+							"}",
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Validations",
+			"description": "",
+			"item": [
+				{
+					"name": "Post COS - Invalid Code and Name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cde9b2cf-f9dc-4870-b1a2-b3b8c8dd2c2a",
+								"type": "text/javascript",
+								"exec": [
+									"var responseData = JSON.parse(responseBody); ",
+									"tests[\"Body has ITSP10271\"] = responseBody.has(\"ITSP10271\");",
+									"",
+									"tests[\"Body has ITSP10015\"] = responseBody.has(\"ITSP10015\"); ",
+									"",
+									" //Messages",
+									"tests[\"responseData.Messages is an array\"] = _.isArray(responseData.Messages) === true;",
+									"",
+									"tests[\"Messages is an array\"] = _.isArray(responseData.Messages) === true;",
+									"",
+									"tests[\"Messages have ITSP10271\"] = _.some(responseData.Messages, { \"message_id\": \"ITSP10271\", \"Severity\": \"Error\" });",
+									"tests[\"Messages have ITSP10015\"] = _.some(responseData.Messages, { \"message_id\": \"ITSP10015\", \"Severity\": \"Error\" });",
+									"",
+									"let messageITSP10271 = _.find(responseData.Messages, { \"message_id\": \"ITSP10271\" });",
+									"",
+									"tests[\"Messages have ITSP10271 with Severity = Error\"] = messageITSP10271.Severity == \"Error\";",
+									"",
+									"",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "organisation-id",
+								"value": "{{organisation-id}}"
+							},
+							{
+								"key": "provider-type",
+								"value": "{{provider-type_HEP}}"
+							},
+							{
+								"key": "message-id",
+								"value": "{{$guid}}"
+							},
+							{
+								"key": "user-name",
+								"value": "{{user-name}}"
+							},
+							{
+								"key": "dhs-String-timestamp",
+								"value": "{{dhs-String-timestamp}}"
+							},
+							{
+								"key": "provider-String-timestamp",
+								"value": "{{provider-String-timestamp}}"
+							},
+							{
+								"key": "organisation-name",
+								"value": "{{organisation-name}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Ocp-Apim-Subscription-Key",
+								"value": "{{Ocp-Apim-Subscription-Key}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"e533_course_of_study_code\": \"\",\r\n  \"e394_course_of_study_name\": \"\",\r\n  \"e310_course_of_study_type\": \"10\",\r\n  \"e350_course_of_study_load\": 3.0,\r\n  \"e455_combined_course_of_study_indicator\": true\r\n}"
+						},
+						"url": {
+							"raw": "{{hostUrl}}{{basePathCurriculum}}courses-of-study/",
+							"host": [
+								"{{hostUrl}}{{basePathCurriculum}}courses-of-study"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "fe8a8060-640c-4b92-8b8e-70c3340d43de",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "d6aae96e-696a-43d0-83c6-b63177b9f25d",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Response status code is 400\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([400]);",
+							"});",
+							"",
+							"var responseJSON;",
+							"try { ",
+							"    responseJSON = JSON.parse(responseBody); ",
+							"    tests['response is valid JSON'] = true;",
+							"}",
+							"catch (e) { ",
+							"    console.log(e);",
+							"    tests['response is valid JSON'] = false;",
+							"}"
+						]
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "3cfa12b0-067f-4da7-ae13-6182b0d2af41",
+				"type": "text/javascript",
+				"exec": [
+					"/*",
+					"console.log(pm.variables.get('provider-String-timestamp'));",
+					"pm.environment.set(\"provider-String-timestamp\", new Date().toISOString()); ",
+					"console.log('after setting value' + pm.variables.get('provider-String-timestamp'));",
+					"*/",
+					"",
+					"var _ = require('lodash');"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "4437f6fc-0b02-4985-bd14-84b27bb3cbb7",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "714dac04-198b-41e1-9be2-2becb2f75ebd",
+			"key": "uid",
+			"value": "3",
+			"type": "string",
+			"description": ""
+		}
+	]
+}

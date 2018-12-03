@@ -25,7 +25,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzureWebApp", "AzureWebApp\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "POC.API_Logging", "POC.API_Logging\POC.API_Logging.csproj", "{00178E05-E5D2-4F16-AB23-4C37C474B5E0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POC.API.Tests.IntegrationTestsV2", "POC.API.Tests.IntegrationTestsV2\POC.API.Tests.IntegrationTestsV2.csproj", "{A074B703-F351-4496-B8FD-461140BFB8B9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "POC.API.Tests.IntegrationTestsV2", "POC.API.Tests.IntegrationTestsV2\POC.API.Tests.IntegrationTestsV2.csproj", "{A074B703-F351-4496-B8FD-461140BFB8B9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Postman", "Postman", "{B75DC39A-C3B7-473B-A2E2-AD1A8A741850}"
+	ProjectSection(SolutionItems) = preProject
+		\\EDU\Home$\NK2774\Desktop\POC - CRUD.postman_collection.json = \\EDU\Home$\NK2774\Desktop\POC - CRUD.postman_collection.json
+		\\EDU\Home$\NK2774\Desktop\POC.postman_environment.json = \\EDU\Home$\NK2774\Desktop\POC.postman_environment.json
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -84,6 +90,7 @@ Global
 		{D02CE0F2-7AB2-4714-9399-373B1B23AD4A} = {7A75098A-DC14-4984-8737-430C319768C9}
 		{27F44739-D23A-484D-9CEF-291ED00C7249} = {7A75098A-DC14-4984-8737-430C319768C9}
 		{A074B703-F351-4496-B8FD-461140BFB8B9} = {9F813243-8701-4FF1-A202-59EB98D8AE84}
+		{B75DC39A-C3B7-473B-A2E2-AD1A8A741850} = {9F813243-8701-4FF1-A202-59EB98D8AE84}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6248C8BC-8451-47C4-995D-D354121820BE}
