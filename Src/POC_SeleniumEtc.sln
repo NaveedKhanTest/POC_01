@@ -29,8 +29,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "POC.API.Tests.IntegrationTe
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Postman", "Postman", "{B75DC39A-C3B7-473B-A2E2-AD1A8A741850}"
 	ProjectSection(SolutionItems) = preProject
-		\\EDU\Home$\NK2774\Desktop\POC - CRUD.postman_collection.json = \\EDU\Home$\NK2774\Desktop\POC - CRUD.postman_collection.json
-		\\EDU\Home$\NK2774\Desktop\POC.postman_environment.json = \\EDU\Home$\NK2774\Desktop\POC.postman_environment.json
+		postman\Dev.postman_environment.json = postman\Dev.postman_environment.json
+		postman\myapi.postman_collection.json = postman\myapi.postman_collection.json
+		postman\Run_PostmanTests.ps1 = postman\Run_PostmanTests.ps1
 	EndProjectSection
 EndProject
 Global
