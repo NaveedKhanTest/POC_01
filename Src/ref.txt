@@ -1,0 +1,2 @@
+
+newman run collection.json -e environment.json --global-var api-key="key123abc" --global-var hostUrl="http://test.myapi.com/"
