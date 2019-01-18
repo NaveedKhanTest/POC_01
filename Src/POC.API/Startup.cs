@@ -14,8 +14,7 @@ using Swashbuckle.AspNetCore.Swagger;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Http;
 using POC.API.Handlers;
-
-
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace POC.API
 {
@@ -83,6 +82,11 @@ namespace POC.API
                 //services.AddScoped<ISomeHandler, SomeHandler>();
                 //services.AddScoped<ISomeHelperService, SomeHelperService>();
             }
+
+            //Note: we can use TryAddSingleton if we add dev/fake version of SomeHandlerDev 
+            // in test project for ISomeHandler (BaseTest.AssemblyInit) we will use WebHostBuilder => .ConfigureServices
+            // by doing this we will never put dev/fake version in startup.cs (inside HostingEnvironment.IsDevelopment())
+            //services.TryAddSingleton<ISomeHandler, SomeHandler>();
 
             #endregion
 

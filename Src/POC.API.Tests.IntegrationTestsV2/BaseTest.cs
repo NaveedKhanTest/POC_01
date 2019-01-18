@@ -10,6 +10,7 @@
     using Microsoft.AspNetCore.TestHost;
     using Microsoft.Extensions.Configuration;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Microsoft.Extensions.DependencyInjection;
 
     /// <summary>
     /// Base class for integration test that handles the httpServer and client.
@@ -40,6 +41,12 @@
             var webHostBuilder = new WebHostBuilder()
                 .UseEnvironment("Test") // (Development, Staging, Prod)
                 .UseConfiguration(config)
+                .ConfigureServices((services) =>
+                {
+                    //services.AddSingleton<ISomeHandler, SomeHandlerDev>();
+                    //Note: in Startup we can do services.TryAddSingleton<ISomeHandler, SomeHandler>();// 
+                    //using Microsoft.Extensions.DependencyInjection;
+                })
                 .UseStartup<Startup>(); // Startup class of web api project
 
             // to fix error we should have same nuget packages
