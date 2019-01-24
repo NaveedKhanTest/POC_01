@@ -90,6 +90,14 @@ namespace POC.API.Tests.IntegrationTests
             return await httpResponse.CheckServerError(this.TestContext);
         }
 
+
+        public async Task<HttpResponseMessage> Post(string path, object newItem)
+        {
+            //var content = new StringContent(json, System.Text.Encoding.UTF8, JsonMergePatchDocument.ContentType);
+            var httpResponse = await HttpClient.PostAsJsonAsync(path, newItem).ConfigureAwait(false);
+            return await httpResponse.CheckServerError(this.TestContext);
+        }
+
         public ApiResponseMessage<T> GetById<T>(string url)
             where T : class
         {
@@ -134,6 +142,7 @@ namespace POC.API.Tests.IntegrationTests
             return apiResponseMessage;
         }
 
+        //Name it Post
         public ApiResponseMessage<T> AddNewRecord<T>(string url, T newItem)
         {
             var apiResponseMessage = new ApiResponseMessage<T>();

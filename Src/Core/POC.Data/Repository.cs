@@ -31,6 +31,9 @@ namespace POC.Data
         public async Task<T> PostAsync(T entity)
         {
             var result = await Context.Set<T>().AddAsync(entity);
+            
+            //SetCommonDbTablesFields();
+
             Context.SaveChanges();
             return result.Entity;
 
@@ -123,3 +126,6 @@ namespace POC.Data
         }
     }
 }
+
+
+

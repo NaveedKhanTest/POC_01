@@ -10,7 +10,7 @@ using POC.Core.Data;
 
 namespace POC.Data
 {
-    public class PocDbContext : DbContext, IDbContext
+    public partial class PocDbContext : DbContext, IDbContext
     {
         
         public PocDbContext(DbContextOptions<PocDbContext> options)

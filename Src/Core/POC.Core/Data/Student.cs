@@ -4,7 +4,7 @@ using System.Text;
 
 namespace POC.Core.Data
 {
-    public class Student
+    public class Student : BaseEntity
     {
         public int ID { get; set; }
         public string LastName { get; set; }

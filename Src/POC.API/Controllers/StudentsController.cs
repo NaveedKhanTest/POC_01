@@ -17,6 +17,8 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace POC.API.Controllers
 {
     [Route("api/[controller]")]
+    //[SwaggerTag("Students")]
+    //[Route("students")]
     //[ApiController]
     //[Route("students")]
     //[Produces("application/json")] //only json
@@ -34,7 +36,7 @@ namespace POC.API.Controllers
         }
 
         [HttpGet(Name = nameof(GetAllStudents))]
-        [SwaggerOperation(OperationId = "getAllStudents")]
+        [SwaggerOperation(OperationId = "getAllStudents", Tags = new[] { "Students" , "Another Group" })]
         [ProducesResponseType(typeof(List<StudentModel>), 200)]
         //[ProducesResponseType(typeof(object), 200)]
         [ProducesResponseType(404)]
@@ -62,6 +64,7 @@ namespace POC.API.Controllers
         }
         
         [HttpGet("{id}", Name = nameof(GetStudentById))]
+        //[HttpGet("SomePath/{uid}", Name = nameof(GetSomePathById))]
         [SwaggerOperation(OperationId = "getStudentById")]
         [ProducesResponseType(typeof(StudentModel), 200)]
         [ProducesResponseType(404)]
@@ -180,6 +183,38 @@ namespace POC.API.Controllers
             return this.BadRequest(new { Values = "some error ... model with messages .." });
         }
 
+
+        [HttpDelete("{uid}", Name = nameof(DeleteCitizenshipById))]
+        //[HttpDelete("citizenships/{uid}", Name = nameof(DeleteCitizenshipById))]
+        [SwaggerOperation(OperationId = "deleteCitizenshipById")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(typeof(object), 400)]
+        [ProducesResponseType(typeof(object), 500)]
+        public async Task<IActionResult> DeleteCitizenshipById(int uid)
+        {
+            await Task.CompletedTask;
+            return this.NotFound();
+
+            //var existingModel = await this.StudentQueries.GetStudentById(uid);
+            //if (existingModel == null)
+            //{
+            //    return this.NotFound();
+            //}
+
+            //var student = Mapper.Map(existingModel);
+            //var result = await this.StudentCommands.Delete(student);
+            //if (result.ResultStatus == CommandStatus.Success)
+            //{
+            //    return this.NoContent();
+            //}
+
+            //return this.BadRequest(result.ResultValue);
+        }
+
+
+
+
         /*
         public async Task<IActionResult> PostBulk([FromBody] IList<PostData<StudentModel>> studentList)
         {
@@ -230,6 +265,19 @@ namespace POC.API.Controllers
         }
         */
 
+
+        public enum CommandStatus
+        {
+            /// <summary>
+            /// Success
+            /// </summary>
+            Success,
+
+            /// <summary>
+            /// Failure
+            /// </summary>
+            Failure
+        }
 
 
     }

@@ -13,6 +13,8 @@ namespace POC.API.Tests.IntegrationTests
     [TestClass]
     public class ValuesControllerTests : IntegrationTestBase
     {
+        private readonly string baseUrl = "api/Students";
+
 
         [TestMethod]
         public void GetAllValues()
@@ -70,7 +72,25 @@ namespace POC.API.Tests.IntegrationTests
 
         public TestContext TestContext { get; set; }
 
+        //NOTE: other test project is working fine
 
+        //[TestMethod]
+        //public async Task PostStudents_IsOK()
+        //{
+        //    var newItem = new StudentModel()
+        //    {
+        //        EnrollmentDate = DateTime.Now,
+        //        FirstMidName = "FirstMid Name",
+        //        LastName = "Last name",
+        //    };
+
+            
+        //    var url = $"{baseUrl}";
+        //    var actual = this.Post($"{url}", newItem)
+        //              .Expect(200)
+        //              .As<StudentModel>();
+        //    Assert.IsNotNull(actual);
+        //}
 
         //[TestMethod]
         //public void CourseOfStudy_ShouldBe_PartiallyUpdated()
