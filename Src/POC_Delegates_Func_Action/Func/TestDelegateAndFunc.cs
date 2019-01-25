@@ -9,6 +9,8 @@ namespace POC_Delegates_Func_Action
 {
     //public delegate bool MyDelegate(string firstName, int age);
 
+    // https://www.tutorialspoint.com/csharp/csharp_delegates.htm 
+
     public class TestDelegateAndFunc
     {
         //3rd step) create delegate instances
